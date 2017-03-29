@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "babel-loader": "^6.4.1"
+    "babel-loader": "^6.4.1",
+    "express": "^4.15.2"
   }
 }

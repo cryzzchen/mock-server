@@ -4,10 +4,11 @@
   "description": "UI: http://www.material-ui.com/",
   "main": "build/route/index.js",
   "scripts": {
-    "build-babel": "babel src/route --out-dir build/route",
-    "start": "babel-node build/route/index.js",
+    "build-babel": "babel src/server --out-dir build/server",
+    "start": "babel-node build/server/route/index.js",
     "build": "webpack --color -p",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "express": "babel src/server --out-dir build/server && babel-node build/server/route/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +17,7 @@
   "author": "cryzzchen",
   "license": "ISC",
   "devDependencies": {
+    "antd": "^2.11.0",
     "autoprefixer": "^7.1.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
@@ -30,12 +32,14 @@
     "css-loader": "^0.28.4",
     "ejs": "^2.5.6",
     "ejs-compiled-loader": "^1.1.0",
+    "es6-promise": "^4.1.0",
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "glob": "^7.1.2",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.28.0",
     "log4js": "^1.1.1",
+    "material-ui": "^0.18.3",
     "mongodb": "^2.2.28",
     "node-sass": "^4.5.3",
     "path": "^0.12.7",

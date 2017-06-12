@@ -1,9 +1,9 @@
-const glob = require('glob');
+// const express = require('express');
+// const path = require('path');
 
-const files = glob.sync('./src/static/js/**/index.js');
-console.log(files.map((file) => {
-	console.log(file);
-	const entryName = file.replace('./src/static/js/', '').replace('/index.js', '');
-	return entryName;
-}));
+// const app = express();
+// const port = 3000;
 
+// app.engine('html', ejs.__express);
+// app.set('view engine', 'html');
+// app.set('views', path.resolve(__dirname, './server/views'));

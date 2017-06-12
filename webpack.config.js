@@ -8,16 +8,18 @@ const autoprefixer = require('autoprefixer');
 const rootDir = path.resolve(__dirname, './');
 const buildDir = path.resolve(rootDir, './build');
 const staticDir = path.resolve(buildDir, './static');
-const viewDir = path.resolve(buildDir, './built-view');
+const viewDir = path.resolve(buildDir, './views');
+
+const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 
 function getEntries() {
-    // 获得入口文件，我们约定入口文件为/static/js/**/index.js
+    // 获得入口文件，我们约定入口文件为/static/js/page/**/index.js
     // 同步获得
     const entries = {};
-    glob.sync('./src/static/js/**/index.js').map((file) => {
+    glob.sync('./src/static/js/page/**/index.js').map((file) => {
         const tmp = file;
-        const entryName = tmp.replace('./src/static/js/', '').replace('/index.js', '');
-        entries[entryName] = file;
+        const entryName = tmp.replace('./src/static/js/page/', '').replace('/index.js', '');
+        entries[entryName] = [file, hotMiddlewareScript];
     });
 
     return entries;
@@ -30,7 +32,7 @@ function getHtmlWepackPlugin() {
     const plugins = []
 
     Object.keys(entries).map((name) => {
-        const template = `./src/view/${name}.html`;
+        const template = `./src/views/${name}.html`;
         const files = glob.sync(template);
         if (files && files.length > 0) {
             plugins.push(new HtmlWebpackPlugin({
@@ -43,13 +45,22 @@ function getHtmlWepackPlugin() {
     return plugins;
 }
 
+const alias = {
+    'httpClient': path.resolve(__dirname, './src/static/js/lib/http-client.js'),
+    'reset': path.resolve(__dirname, './src/static/js/common/global.scss')
+}
+
 module.exports = {
+    resolve: {
+        alias
+    },
     entry: entries,    // 入口文件
     output: {
-        path: staticDir,
+        path: buildDir,
         publicPath: '/static',
-        filename: '[name].js'
+        filename: './js/[name].js'
     },
+    devtool: 'eval-source-map',
     module: {
         rules: [
             {
@@ -94,15 +105,16 @@ module.exports = {
                 postcss: [autoprefixer]
             }
         }),
-        new ExtractTextPlugin('[name].css')
-    ].concat(getHtmlWepackPlugin()),
-    devServer: {
-        contentBase: './build',
+        new ExtractTextPlugin('[name].css'),
+        new webpack.HotModuleReplacementPlugin()
+    ]
+    ,devServer: {
         host: 'localhost',
         publicPath: '/static',
         port: 9090,
-        inline: false,
-        hot: false,
+        hot: true,
+        quiet: false,
+        noInfo: true,
         proxy: {
             // 将请求转到express
             '*': {

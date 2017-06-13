@@ -3,17 +3,26 @@
 */
 import express from 'express';
 import {middleLogger} from '../common';
-import {queryTypes, getData} from '../../db/index';
+import {queryTypes, dbHandler} from '../../db/index';
 
 const router = express.Router();
+
 router.use(middleLogger);
 
 
 // 获得全部文档信息
 router.get('/get/docs', (req, res) => {
-	getData(queryTypes.getDocs).then((result) => {
+	dbHandler(queryTypes.getDocs).then((result) => {
 		res.send(result);
 	})
+});
+
+// 创建文档
+router.post('/create/doc', (req, res) => {
+	console.log(req.body);
+	dbHandler(queryTypes.createDoc, req.body).then((result) => {
+		res.send(result);
+	});
 });
 
 export default router;

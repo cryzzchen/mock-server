@@ -10,7 +10,6 @@ const buildDir = path.resolve(rootDir, './build');
 const staticDir = path.resolve(buildDir, './static');
 const viewDir = path.resolve(buildDir, './views');
 
-const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 
 function getEntries() {
     // 获得入口文件，我们约定入口文件为/static/js/page/**/index.js
@@ -19,7 +18,7 @@ function getEntries() {
     glob.sync('./src/static/js/page/**/index.js').map((file) => {
         const tmp = file;
         const entryName = tmp.replace('./src/static/js/page/', '').replace('/index.js', '');
-        entries[entryName] = [file, hotMiddlewareScript];
+        entries[entryName] = file;
     });
 
     return entries;

@@ -15,5 +15,9 @@ router.get(prefix, (req, res) => {
 	res.render('doc');
 });
 
+// 编辑文档
+router.get(prefix + '/edit/:id', (req, res) => {
+	res.render('edit', {id: req.params.id});
+});
 
 export default router;

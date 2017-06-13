@@ -3,25 +3,24 @@
 */
 
 import React, {PureComponent} from 'react';
-import {Table} from 'antd';
+import {Table, Row, Col} from 'antd';
 
 import apis from '../api/index';
+import AddModal from './addModal';
 import './list.scss';
 
 const DocItem = ({doc}) => {
-    console.log(doc);
+    const onClick = () => {
+
+    }
     return (
-        <li>
+        <div className="item">
+            <h3>{doc.project_name}</h3>
             <div className="intro">
-                <h3>{doc.project_name}</h3>
-                <span>包含{doc.apis.length}个api</span>
-                <span>上次修改时间</span>
+                <span>包含{doc.apis ? doc.apis.length : 0}个api</span>
+                <span className="time">2014-1-2/12:20</span>
             </div>
-            {
-                doc.apis && doc.apis.length > 0 &&
-                <div className="apis" />
-            }
-        </li>
+        </div>
     );
 }
 
@@ -34,7 +33,6 @@ class List extends PureComponent {
     }
     componentDidMount() {
         apis.getDocs().then((docs = []) => {
-            console.log(docs);
             this.setState({
                 docs
             });
@@ -43,15 +41,20 @@ class List extends PureComponent {
     render() {
         const {docs} = this.state;
         return (
-            <ul className="docs">
-                {docs.map(d => 
-                    <DocItem
-                        key={d._id}
-                        doc={d}
-                    />
-                )
-                }
-             </ul>
+            <div>
+                <AddModal />
+                <div className="docs">
+                    {docs.map(d =>
+                        <div className="item-wp">
+                            <DocItem
+                                key={d._id}
+                                doc={d}
+                            />
+                        </div>
+                    )
+                    }
+                </div>
+            </div>
         );
     }
 }

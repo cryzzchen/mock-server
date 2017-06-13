@@ -1,5 +1,6 @@
 import ejs from 'ejs';
 import express from 'express';
+import bodyParser from 'body-parser';
 import path from 'path';
 
 import {LOG} from './common';
@@ -17,6 +18,9 @@ app.set('view engine', 'html');
 
 // 静态资源
 app.use('/static', express.static(rootDir + '/src/static/js'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // pageController
 pageRouters.forEach((r) => {

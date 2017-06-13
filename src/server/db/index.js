@@ -26,15 +26,15 @@ const getMongoDb = () => {
 
 
 
-const getData = (type) => {
+const dbHandler = (type, ...props) => {
 	return getMongoDb().then((db) => {
-		return query[type](db);
+		return query[type](db, ...props);
 	}).then((result) => {
 		return result;
 	});
 };
 
 export {
-	getData,
+	dbHandler,
 	queryTypes
 };

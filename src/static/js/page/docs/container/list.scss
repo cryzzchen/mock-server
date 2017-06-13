@@ -1,1 +1,61 @@
-@import '/static/common/global.css';
+
+.docs {
+	margin: 20px 0 0 -1%;
+
+	.item-wp {
+		display: inline-block;
+		width: 24%;
+		margin: 20px 1%;
+		color: #fff;
+		background: #404040;
+		border-radius: 3px;
+
+		.item {
+			position: relative;
+			padding: 20px 20px 50px;
+
+			h3 {
+				font-size: 20px;
+				line-height: 40px;
+				text-align: center;
+			}
+
+			.intro {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 30px;
+				width: 100%;
+				padding: 0 10px;
+				line-height: 30px;
+				background: rgba(255, 255, 255, .2);
+
+				.time {
+					float: right;
+				}
+			}
+		}
+	}
+}
+.add-wp {
+	.add {
+		display: block;
+		height: 50px;
+		margin-top: 20px;
+		line-height: 50px;
+		font-size: 16px;
+		text-align: center;
+		border: 1px solid #eee;
+		border-radius: 3px;
+
+		&:hover {
+			background: #f9f9f9;
+			border-color: #ddd;
+
+			color: #333;
+		}
+	}
+}
+.add-modal .textarea {
+	margin-top: 10px;
+}

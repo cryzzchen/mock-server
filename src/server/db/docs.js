@@ -7,7 +7,8 @@ import getLogger from '../lib/log';
 const LOG = getLogger('mongodb');
 
 const queryTypes = {
-	getDocs: 'getDocs'
+	getDocs: 'getDocs',
+	createDoc: 'createDoc'
 };
 
 const query = (() => {
@@ -29,8 +30,29 @@ const query = (() => {
 		});
 	};
 
+	const createDoc = (db, body) => {
+		// 创建新文档
+		return new Promise((resolve, reject) => {
+			db.collection('docs').insert({
+				project_name: body.name,
+				desciption: body.desc
+			}, (err, result) => {
+				if (err) {
+					LOG.error(type + ' error:' + err);
+					reject(err);
+				}
+				resolve(result);
+			});
+		}).then((result) => {
+			console.log('数据库连接已关闭')
+			db.close();
+			return result;
+		});
+	}
+
 	return {
-		getDocs
+		getDocs,
+		createDoc
 	};
 })();
 

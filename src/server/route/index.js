@@ -18,6 +18,8 @@ app.set('view engine', 'html');
 
 // 静态资源
 app.use('/static', express.static(rootDir + '/src/static/js'));
+app.use('/json', express.static(rootDir + '/src/server/json'));
+app.use('/swagger', express.static(rootDir + '/src/static/swagger'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -3,6 +3,7 @@
 */
 import {Promise} from 'es6-promise';
 import getLogger from '../lib/log';
+import data2json from '../lib/data2json';
 
 const LOG = getLogger('mongodb');
 
@@ -21,6 +22,8 @@ const query = (() => {
 					reject(err);
 				}
 				console.log(result)
+			data2json();
+				
 				resolve(result);
 			});
 		}).then((result) => {

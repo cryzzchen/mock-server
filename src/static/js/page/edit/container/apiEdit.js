@@ -1,6 +1,9 @@
 import React, {PureComponent} from 'react';
 import {Button, Input, Row, Col, Table} from 'antd';
 import PathParameter from './pathParameter';
+import RequestParameter from './requestParameter';
+import BodyParameter from './bodyParameter';
+import ResponseBody from './responseBody';
 
 import './apiEdit.scss';
 
@@ -81,17 +84,40 @@ class ApiEdit extends PureComponent {
                         <h3>路径参数</h3>
                     </div>
                     <div className="bd">
-
+                        <PathParameter
+                            params={['designids', 'isShow']}
+                        />
                     </div>
                 </div>
                 <div className="request">
                     <div className="hd">
-                        <h3>请求参数</h3>
+                        <h3>请求参数(Query)</h3>
+                    </div>
+                    <div className="bd">
+                        <RequestParameter />
+                    </div>
+                </div>
+                <div className="body">
+                    <div className="hd">
+                        <h3>请求参数(Body)</h3>
+                    </div>
+                    <div className="bd">
+                        <BodyParameter />
                     </div>
                 </div>
                 <div className="response">
                     <div className="hd">
                         <h3>响应</h3>
+                    </div>
+                    <div className="bd">
+                        <ResponseBody />
+                    </div>
+                </div>
+                <div className="code">
+                    <div className="hd">
+                        <h3>状态码</h3>
+                    </div>
+                    <div className="bd">
                     </div>
                 </div>
             </div>

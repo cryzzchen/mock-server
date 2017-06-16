@@ -4,7 +4,7 @@ import {Input} from 'antd';
 class ResponseBody extends Component {
 	render() {
 		return(
-			<Input type="textarea" row={4} placeholder="{data: []}" />
+			<Input type="textarea" rows={4} placeholder="{data: []}" />
 		);
 	}
 }

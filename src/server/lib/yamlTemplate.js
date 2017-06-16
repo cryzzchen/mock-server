@@ -8,9 +8,9 @@ const _generateSwagger = () => {
 
 const _generateInfo = (data = {}) => {
     return 'info:\n' +
-            '  - description: ' + data.description + '\n' +
-            '  - version: 1.0.0' +
-            '  - title: ' + '测试文档' + '\n';
+            '  description: ' + data.description + '\n' +
+            '  version: 1.0.0\n' +
+            '  title: ' + '测试文档' + '\n';
 
 }
 
@@ -50,7 +50,7 @@ const _generatePaths = (data = {}) => {
 
 
     const _generatePath = (path, prefix) => {
-        return prefix + '/api/test\n' +
+        return prefix + '/api/test:\n' +
                prefix + '  get:\n' +
                prefix + '    summary: 这个是测试API\n' +
                prefix + '    description: 这里是详细描述详细描述\n' +

@@ -5,9 +5,11 @@
 import React, {Component} from 'react';
 import {Table, Input, Select} from 'antd';
 
+const Option = Select.Option;
+
 class PathParameter extends Component {
     getDataSource() {
-        const params = this.props.params || ['designids', 'isShow'];
+        const params = this.props.params || [];
         let dataSource;
         if (this.state && this.state.dataSource) {
             dataSource = Object.assign(this.state.dataSource);
@@ -44,12 +46,15 @@ class PathParameter extends Component {
         const columns = [{
             title: '参数',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            render(value, row, index) {
+                return <div>{value}</div>;
+            }
         }, {
             title: '类型',
             dataIndex: 'type',
             key: 'type',
-            render(row) {
+            render(value, row, index) {
                 return (
                     <Select defaultValue="String" style={{ width: 120 }} onChange={this.onChangeType}>
                         <Option value="String">String</Option>
@@ -65,7 +70,7 @@ class PathParameter extends Component {
             title: '示例',
             dataIndex: 'example',
             key: 'example',
-            render(row) {
+            render(value, row, index) {
                 return (
                     <Input />
                 );
@@ -74,7 +79,7 @@ class PathParameter extends Component {
             title: '描述',
             dataIndex: 'desc',
             key: 'desc',
-            render(row) {
+            render(value, row, index) {
                 return (
                     <Input type="textarea" />
                 );
@@ -93,7 +98,7 @@ class PathParameter extends Component {
                     dataSource={this.getDataSource()}
                     columns={this.getColumns()}
                     pagination={false}
-                    rowkey={"name"}
+                    rowkey={'name'}
                 />
             </div>
         );

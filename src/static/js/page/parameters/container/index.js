@@ -10,6 +10,10 @@ class App extends PureComponent {
 		apis.getParams().then((params = []) => {
 
 		});
+
+		apis.getDocs().then((docs = []) => {
+			// 渲染成树结构 ———— 放到controller
+		});
 	}
 	onChange = () => {
 

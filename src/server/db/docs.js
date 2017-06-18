@@ -8,7 +8,8 @@ const LOG = getLogger('mongodb');
 
 const queryTypes = {
 	getDocs: 'getDocs',
-	createDoc: 'createDoc'
+	createDoc: 'createDoc',
+	getParams: 'getParams'
 };
 
 const query = (() => {
@@ -49,11 +50,25 @@ const query = (() => {
 			db.close();
 			return result;
 		});
-	}
+	};
+
+	// 获得参数列表
+	const getParams = (db, id) => {
+		return new Promise((resolve, reject) => {
+			db.collection('parameters').find().toArray((err, result) => {
+				if (err) {
+					LOG.error(err);
+					reject(err);
+				}
+				resolve(result);
+			});
+		});
+	};
 
 	return {
 		getDocs,
-		createDoc
+		createDoc,
+		getParams
 	};
 })();
 

@@ -31,7 +31,8 @@ MongoClient.connect(db, function(err, db) {
 				db.collection('docTree').insert({
 					name: 'level1_' + i,
 					description: '这是文档第一层结构',
-					pid: new DBRef('docTree', rootId)
+					pid: new DBRef('docTree', rootId),
+					level: 1
 				}, (err2, result2) => {
 					if (err2) {
 						console.log(err2);
@@ -52,7 +53,8 @@ MongoClient.connect(db, function(err, db) {
 				db.collection('docTree').insert({
 					name: 'level2_0',
 					description: '这是文档第二层结构',
-					pid: new DBRef('docTree', level1Id)
+					pid: new DBRef('docTree', level1Id),
+					level: 2
 				}, (err4, result4) => {
 					if (err4) {
 						console.log(err4);

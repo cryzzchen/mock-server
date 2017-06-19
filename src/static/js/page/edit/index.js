@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducer/index';
 
-import ApiEdit from './container/apiEdit';
+import App from './container/edit';
 import Frame from '../../common/frame/index';
 
 const div = document.createElement('div');
@@ -21,7 +21,7 @@ const store = createStore(
 render(
 	<Provider store={store}>
 		<Frame
-			content={<ApiEdit />}
+			content={<App />}
 		/>
 	</Provider>,
 	div

@@ -1,10 +1,4 @@
 {
-<<<<<<< HEAD
-  "devDependencies": {
-    "babel-loader": "^6.4.1",
-    "express": "^4.15.2"
-  }
-=======
   "name": "mock-server",
   "version": "1.0.0",
   "description": "UI: http://www.material-ui.com/",
@@ -67,6 +61,8 @@
   "bugs": {
     "url": "https://github.com/cryzzchen/mock-server/issues"
   },
-  "homepage": "https://github.com/cryzzchen/mock-server#readme"
->>>>>>> origin/master
+  "homepage": "https://github.com/cryzzchen/mock-server#readme",
+  "dependencies": {
+    "react-json": "^0.2.1"
+  }
 }

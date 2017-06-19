@@ -2161,6 +2161,10 @@ forwarded@~0.1.0:
   version "0.1.0"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/forwarded/-/forwarded-0.1.0.tgz#19ef9874c4ae1c297bcf078fde63a09b66a84363"
 
+freezer-js@^0.5.2:
+  version "0.5.2"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/freezer-js/-/freezer-js-0.5.2.tgz#c24dbc47fc327b3475ea34adc408b0953f2a4907"
+
 fresh@0.5.0:
   version "0.5.0"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/fresh/-/fresh-0.5.0.tgz#f474ca5e6a9246d6fd8e0953cfa9b9c805afa78e"
@@ -3339,6 +3343,10 @@ object-assign@4.x, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.
   version "4.1.1"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
+object-assign@^2.0.0:
+  version "2.1.1"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/object-assign/-/object-assign-2.1.1.tgz#43c36e5d569ff8e4816c4efa8be02d26967c18aa"
+
 object-assign@^3.0.0:
   version "3.0.0"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
@@ -4280,6 +4288,13 @@ react-event-listener@^0.4.5:
     fbjs "^0.8.4"
     prop-types "^15.5.4"
     warning "^3.0.0"
+
+react-json@^0.2.1:
+  version "0.2.1"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/react-json/-/react-json-0.2.1.tgz#f348390189b290cbf7f16c62d68303248e553f70"
+  dependencies:
+    freezer-js "^0.5.2"
+    object-assign "^2.0.0"
 
 react-lazy-load@^3.0.10:
   version "3.0.12"

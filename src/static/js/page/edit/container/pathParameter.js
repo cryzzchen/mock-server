@@ -58,11 +58,12 @@ class PathParameter extends Component {
                 return (
                     <Select defaultValue="String" style={{ width: 120 }} onChange={this.onChangeType}>
                         <Option value="String">String</Option>
-                        <Option value="Id">Id</Option>
                         <Option value="Number">Number</Option>
                         <Option value="Boolean">Boolean</Option>
                         <Option value="Array">Array</Option>
                         <Option value="Date">Date</Option>
+                        <Option value="Ref">Ref</Option>
+                        <Option value="自定义">自定义</Option>
                     </Select>
                 );
             }

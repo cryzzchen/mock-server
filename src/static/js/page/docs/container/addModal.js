@@ -3,6 +3,9 @@ import {Modal, Button, Input} from 'antd';
 import apis from '../api/index';
 
 class App extends Component {
+	static defaultProps = {
+		level: 1
+	}
 	state = {
 		loading: false,
 		visible: false
@@ -16,9 +19,11 @@ class App extends Component {
 	    this.setState({ loading: true });
 	    apis.createDoc({
 	    	name: this.state.name,
-	    	desc: this.state.desc
-	    }).then(() => {
+	    	desc: this.state.desc,
+	    	level: this.props.level
+	    }).then((result) => {
 	    	this.setState({ loading: false, visible: false });
+	    	this.props.addCallback(result);
 	    });
 	}
 	handleCancel = () => {

@@ -23,9 +23,44 @@ const parameters = (state = {path: [], query: [], body: []}, action) => {
 		return {
 			...state,
 			path: paths.map(path => {
-				return path.substring(1, path.length - 1)
+				return {
+					name: path.substring(1, path.length - 1)
+				};
 			})
 		}
+	}
+	case actionTypes.updatePathParams: {
+		const path = state.path.concat([]);
+		path[action.index] = Object.assign({}, path[action.index], action.pathParams);
+		return {
+			...state,
+			path
+		};
+	}
+	case actionTypes.updateQueryParams: {
+		const query = state.query.concat([]);
+		query[action.index] = Object.assign({}, query[action.index], action.queryParams);
+		return {
+			...state,
+			query
+		};
+	}
+	case actionTypes.deleteQueryParam: {
+		let query = state.query.concat([]);
+		query.splice(action.index, 1);
+		return {
+			...state,
+			query
+		};
+	}
+	case actionTypes.addQueryParam: {
+		let query = state.query.concat([]);
+		query.push({});
+
+		return {
+			...state,
+			query
+		};
 	}
 	default:
 		return state;

@@ -1,22 +1,60 @@
 import React, {PureComponent} from 'react';
-import {Table, Input, Select} from 'antd';
+import {Table, Input, Select, Button} from 'antd';
+
+import _ from 'lodash';
+import {connect} from 'react-redux';
+import actions from '../action/index';
+
+const mapStateToProps = (state, ownProps) => {};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    updateQueryParams: (params, index) => {
+        dispatch(actions.updateQueryParams(params, index));
+    },
+    deleteRow: (index) => {
+        dispatch(actions.deleteQueryParam(index));
+    },
+    addRow: () => {
+        dispatch(actions.addQueryParam());
+    }
+});
 
 class RequestParameter extends PureComponent {
-	getDataSource() {
-		return [];
-	}
-	getColumns() {
-		const columns = [{
-			title: '参数',
+    constructor() {
+        super();
+
+        this.state = {
+            dataSource: []
+        };
+    }
+    getDataSource() {
+        return [];
+    }
+    getColumns() {
+        const {updateQueryParams, deleteQueryParam} = this.props;
+        const columns = [{
+            title: '操作',
+            dataIndex: 'op',
+            key: 'op',
+            render: (value, row, index) => {
+                return <a href="javascript:;" className="delete" onClick={(row) => deleteQueryParam(index)}>x</a>
+            }
+        }, {
+            title: '参数',
             dataIndex: 'name',
-            key: 'name'
-		}, {
-			title: '类型',
+            key: 'name',
+            render: (value, row, index) => {
+                return (
+                    <Input onChange={(e) => updateQueryParams({name: e.target.value}, index)} />
+                );
+            }
+        }, {
+            title: '类型',
             dataIndex: 'type',
             key: 'type',
-            render(row) {
+            render: (value, row, index) => {
                 return (
-                    <Select defaultValue="String" style={{ width: 120 }} onChange={this.onChangeType}>
+                    <Select defaultValue="String" style={{ width: 120 }} onChange={(type) => updateQueryParams({type}, index)}>
                         <Option value="String">String</Option>
                         <Option value="Id">Id</Option>
                         <Option value="Number">Number</Option>
@@ -26,49 +64,54 @@ class RequestParameter extends PureComponent {
                     </Select>
                 );
             }
-		}, {
-			title: '是否必需',
-			dataIndex: 'isRequired',
-			key: 'isRequired',
-			render(row) {
-				return (
-					<Select style={{ width: 120 }}>
-						<Option value="true">true</Option>
-						<Option value="false">false</Option>
-					</Select>
-				);
-			}
-		}, {
+        }, {
+            title: '是否必需',
+            dataIndex: 'isRequired',
+            key: 'isRequired',
+            render: (value, row, index) => {
+                return (
+                    <Select defaultValue="false" style={{ width: 120 }} onChange={(required) => updateQueryParams({required}, index)}>
+                        <Option value="true">true</Option>
+                        <Option value="false">false</Option>
+                    </Select>
+                );
+            }
+        }, {
             title: '示例',
             dataIndex: 'example',
             key: 'example',
-            render(row) {
+            render: (value, row, index) => {
                 return (
-                    <Input />
+                    <Input onChange={(e) => updateQueryParams({example: e.target.value}, index)} />
                 );
             }
         }, {
             title: '描述',
             dataIndex: 'desc',
             key: 'desc',
-            render(row) {
+            render: (value, row, index) => {
                 return (
-                    <Input type="textarea" />
+                    <Input type="textarea" onChange={(e) => updateQueryParams({description: e.target.value}, index)} />
                 );
             }
         }];
-		return columns;
-	}
-	render() {
-		return (
-			<Table
-				dataSource={this.getDataSource()}
-                columns={this.getColumns()}
-                pagination={false}
-                rowkey={"name"}
-			/>
-		);
-	}
+        return columns;
+    }
+    render() {
+        const {addRow} = this.props;
+        return (
+            <div>
+                <Table
+                    dataSource={this.state.dataSource}
+                    columns={this.getColumns()}
+                    pagination={false}
+                />
+                <div className="action">
+                    <Button onClick={addRow}>新增</Button>
+                </div>
+            </div>
+        );
+    }
 }
 
-export default RequestParameter;
+export default connect(mapStateToProps, mapDispatchToProps)(RequestParameter);

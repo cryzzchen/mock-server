@@ -21,7 +21,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateBasicInfo: (info) => dispatch(actions.updateBasicInfo(info)),
-    updatePath: (path) => dispatch(actions.updatePath(path))
+    updatePath: (path) => dispatch(actions.updatePath(path)),
+    save: () => dispatch(actions.save(ownProps))
 });
 
 const ItemName = ({name}) => {
@@ -54,7 +55,7 @@ class ApiEdit extends PureComponent {
     }
     render() {
         // dispatch
-        const {basicInfo, updateBasicInfo, updatePath} = this.props;
+        const {basicInfo, updateBasicInfo, updatePath, save} = this.props;
         // state
         const {path} = this.props;
         const {subService, method, contentType} = this.state;
@@ -65,7 +66,7 @@ class ApiEdit extends PureComponent {
                     <div className="hd">
                         <h3>基本信息</h3>
                         <div className="action">
-                            <Button>保存</Button>
+                            <Button onClick={save}>保存</Button>
                             <Button>取消</Button>
                         </div>
                     </div>
@@ -131,9 +132,7 @@ class ApiEdit extends PureComponent {
                         <h3>路径参数</h3>
                     </div>
                     <div className="bd">
-                        <PathParameter
-                            params={path}
-                        />
+                        <PathParameter />
                     </div>
                 </div>
                 <div className="request">

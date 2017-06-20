@@ -68,7 +68,7 @@ router.get('/docs/get', (req, res) => {
     if (req.query) {
         if (!id) {
             if (level) {
-                query.level = level;
+                query.level = parseInt(level, 10);
             }
         }
     }

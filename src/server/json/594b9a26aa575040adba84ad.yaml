@@ -1,0 +1,26 @@
+swagger: '2.0'
+info:
+  description: 222222222222222222222
+  version: 1.0.0
+  title: 新建文档
+schemes:
+  - https
+paths:
+  /api/test:
+    get:
+      summary: 新建接口
+      description: 子服务：com.qunhe.service.tob;<br> 这里是描述
+      responses:
+        200:
+          description: A list of test
+          schema:
+            type: array
+            items:
+              required:
+                - username
+              properties:
+                username:
+                  type: string
+                firstname:
+                  type: string
+      parameters:

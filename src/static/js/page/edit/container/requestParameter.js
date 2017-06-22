@@ -5,7 +5,12 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import actions from '../action/index';
 
-const mapStateToProps = (state, ownProps) => {};
+const mapStateToProps = (state, ownProps) => {
+    const {parameters} = state;
+    return {
+        ...parameters
+    };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateQueryParams: (params, index) => {
@@ -14,8 +19,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     deleteRow: (index) => {
         dispatch(actions.deleteQueryParam(index));
     },
-    addRow: () => {
-        dispatch(actions.addQueryParam());
+    addRow: (index) => {
+        dispatch(actions.addQueryParam(index));
     }
 });
 
@@ -23,21 +28,16 @@ class RequestParameter extends PureComponent {
     constructor() {
         super();
 
-        this.state = {
-            dataSource: []
-        };
-    }
-    getDataSource() {
-        return [];
+        this.index = 0;
     }
     getColumns() {
-        const {updateQueryParams, deleteQueryParam} = this.props;
+        const {updateQueryParams, deleteRow} = this.props;
         const columns = [{
             title: '操作',
             dataIndex: 'op',
             key: 'op',
             render: (value, row, index) => {
-                return <a href="javascript:;" className="delete" onClick={(row) => deleteQueryParam(index)}>x</a>
+                return <a href="javascript:;" className="delete" onClick={() => deleteRow(index)}>x</a>
             }
         }, {
             title: '参数',
@@ -97,17 +97,20 @@ class RequestParameter extends PureComponent {
         }];
         return columns;
     }
+    addRow = () => {
+        this.props.addRow(this.index++);
+    }
     render() {
-        const {addRow} = this.props;
+        const {query} = this.props;
         return (
             <div>
                 <Table
-                    dataSource={this.state.dataSource}
+                    dataSource={query}
                     columns={this.getColumns()}
                     pagination={false}
                 />
                 <div className="action">
-                    <Button onClick={addRow}>新增</Button>
+                    <Button onClick={this.addRow}>新增</Button>
                 </div>
             </div>
         );

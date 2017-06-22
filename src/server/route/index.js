@@ -7,6 +7,7 @@ import {LOG} from './common';
 
 import apiRouters from './controller/index';
 import pageRouters from './pageController/index';
+import generateSwagger from '../db/generateSwagger';
 
 const app = express();
 
@@ -37,4 +38,5 @@ apiRouters.forEach((r) => {
 // 启动
 app.listen(3000, () => {
 	LOG.info('Server on port 3000');
+	generateSwagger('59474af4cfad4897009476ab');
 });

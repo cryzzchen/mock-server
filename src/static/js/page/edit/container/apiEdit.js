@@ -41,10 +41,10 @@ class ApiEdit extends PureComponent {
                 'com.qunhe.service.tob'
             ],
             method: [
-                'GET',
-                'PUT',
-                'POST',
-                'DELETE'
+                'get',
+                'put',
+                'post',
+                'delete'
             ],
             contentType: [
                 'application/json',
@@ -52,6 +52,9 @@ class ApiEdit extends PureComponent {
                 'application/x-www-form-urlencoded'
             ]
         };
+    }
+    componentDidMount() {
+        
     }
     render() {
         // dispatch

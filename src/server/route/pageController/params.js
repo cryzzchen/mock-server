@@ -1,6 +1,5 @@
 import express from 'express';
 import {middleLogger} from '../common';
-import data2Json from '../../lib/data2json';
 
 const router = express.Router();
 

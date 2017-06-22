@@ -4,7 +4,6 @@
 
 import express from 'express';
 import {middleLogger} from '../common';
-import data2Json from '../../lib/data2json';
 
 const router = express.Router();
 
@@ -21,10 +20,5 @@ router.get(prefix + '/edit/:id', (req, res) => {
 	res.render('edit', {id: req.params.id});
 });
 
-router.get(prefix + '/test', (req, res) => {
-	data2Json({fileName: '4.json', data: {}}).then(() => {
-		res.send('OK');
-	});
-});
 
 export default router;

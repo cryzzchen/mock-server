@@ -1,63 +1,68 @@
 import {Promise} from 'es6-promise';
+import format from './format';
+import apis from '../api/index';
 
 export const actionTypes = {
-	updateBasicInfo: 'updateBasicInfo',
-	updatePath: 'updatePath',
-	updatePathParams: 'updatePathParams',
-	updateQueryParams: 'updateQueryParams',
-	updateBodyParams: 'updateBodyParams',
-	updateResponseParams: 'updateResponseParams',
-	deleteQueryParam: 'deleteQueryParam',
-	addQueryParam: 'addQueryParam'
+    updateBasicInfo: 'updateBasicInfo',
+    updatePath: 'updatePath',
+    updatePathParams: 'updatePathParams',
+    updateQueryParams: 'updateQueryParams',
+    updateBodyParams: 'updateBodyParams',
+    updateResponseParams: 'updateResponseParams',
+    deleteQueryParam: 'deleteQueryParam',
+    addQueryParam: 'addQueryParam',
+    saveFail: 'saveFail',
+    saveSucc: 'saveSucc'
 };
 
 // 修改基本信息
 const updateBasicInfo = (basicInfo, ownProps) => {
-	return {
-		type: actionTypes.updateBasicInfo,
-		basicInfo
-	};
+    return {
+        type: actionTypes.updateBasicInfo,
+        basicInfo
+    };
 }
 
 // 修改Api路径
 const updatePath = (basicInfo) => {
-	return {
-		type: actionTypes.updatePath,
-		basicInfo
-	}
+    return {
+        type: actionTypes.updatePath,
+        basicInfo
+    }
 }
 
 // 修改路径参数
 const updatePathParams = (pathParams, index) => {
-	return {
-		type: actionTypes.updatePathParams,
-		pathParams,
-		index
-	}
+    return {
+        type: actionTypes.updatePathParams,
+        pathParams,
+        index
+    }
 }
 
 // 修改请求参数
 const updateQueryParams = (queryParams, index) => {
-	return {
-		type: actionTypes.updateQueryParams,
-		index,
-		queryParams
-	}
+    return {
+        type: actionTypes.updateQueryParams,
+        index,
+        queryParams
+    }
 }
 
 // 删除一条Query参数
 const deleteQueryParam = (index) => {
-	return {
-		type: actionTypes.deleteQueryParam,
-		index
-	}
+    return {
+        type: actionTypes.deleteQueryParam,
+        index
+    }
 }
 
 // 新增一条Query参数
-const addQueryParam = () => {
-	return {
-		type: actionTypes.addQueryParam
-	}
+const addQueryParam = (index) => {
+    return {
+        type: actionTypes.addQueryParam,
+        index
+    }
 }
 
 // 修改body
@@ -70,22 +75,50 @@ const updateResponseParams = () => {
 
 }
 
+const paths = location.pathname.split('/');
+const docId = paths[paths.length - 1];
+
+// 保存成功
+const _saveSucc = () => {
+    return {
+        type: actionTypes.saveSucc
+    };
+};
+
+// 保存失败
+const _saveFail = (err) => {
+    return {
+        type: actionTypes.saveFail,
+        err
+    }
+};
+
 // 保存
 const save = (ownProps) => {
-	return (dispath, getState) => {
-		const basicInfo = getState().basicInfo;
-		const {path, query, body} = getState().parameters;
-	}
+    return (dispath, getState) => {
+        const basicInfo = getState().basicInfo;
+        const {path, query, body} = getState().parameters;
+        console.log('basicInfo:', basicInfo);
+        console.log('path', path, 'query', query, 'body', body);
+        // todo 状态码
+        if (format({basicInfo, path, query, body}).v) {
+            return apis.createApi({basicInfo, path, query, body}, {docId}).then((data) => {
+                dispath(_saveSucc());
+            }, (err) => {
+                dispath(_saveFail(err));
+            });
+        }
+    }
 }
 
 export default {
-	updateBasicInfo,
-	updatePath,
-	updatePathParams,
-	updateQueryParams,
-	deleteQueryParam,
-	addQueryParam,
-	updateBodyParams,
-	updateResponseParams,
-	save
+    updateBasicInfo,
+    updatePath,
+    updatePathParams,
+    updateQueryParams,
+    deleteQueryParam,
+    addQueryParam,
+    updateBodyParams,
+    updateResponseParams,
+    save
 };

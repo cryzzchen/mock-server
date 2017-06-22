@@ -90,4 +90,39 @@ router.post('/doc/create', (req, res) => {
     });
 });
 
+// 删除文档
+router.delete('/doc/delete/:id', (req, res) => {
+    dbHandler(queryTypes.deleteDoc, req.params.id).then((result) => {
+        res.send(result);
+    }, (err) => {
+        res.send(err);
+    });
+});
+
+// 创建API
+router.post('/doc/api/create', (req, res) => {
+    dbHandler(queryTypes.createApi, req.body, req.query).then((result) => {
+        res.send(result);
+    }, (err) => {
+        res.send(err);
+    });
+});
+
+// 获取API
+router.get('/doc/api/get', (req, res) => {
+    if (req.query.docid) {
+        dbHandler(queryTypes.getApisByDocId, req.query.docid).then(result => {
+            res.send(result);
+        }, err => {
+            res.send(err);
+        })
+    } else {
+        dbHandler(queryTypes.getApis, req.query).then(result => {
+            res.send(result);
+        }, err => {
+            res.send(err);
+        })
+    }
+});
+
 export default router;

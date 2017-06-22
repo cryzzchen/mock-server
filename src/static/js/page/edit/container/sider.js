@@ -4,6 +4,7 @@ import {Tree} from 'antd';
 import apis from '../api/index';
 import AddModal from './addModal';
 
+const TreeNode = Tree.TreeNode;
 
 const AddBtn = ({addDoc, addApi, addParams}) => {
     return (
@@ -24,20 +25,25 @@ class Sider extends PureComponent {
     constructor(props) {
         super(props);
 
-        const paths = location.pathname.split('/');
-        const docId = paths[paths.length - 1];
-
         this.state = {
-            docs: [],
-            params: [],
-            docId
+            apis: [],
+            docId: this.props.docId
         };
     }
     componentDidMount() {
-        console.log(this.refs);
-        apis.getDocsById(this.state.docId).then((result) => {
-
-        });
+        apis.getApisByDocId(this.state.docId).then(result => {
+            this.setState({
+                apis: result
+            });
+        })
+    }
+    getTree() {
+        const {apis} = this.state;
+        return <TreeNode key={-1} title="全部接口">
+                {apis.map(api => {
+                    return <TreeNode key={api._id} title={api.basicInfo.name} />
+                })}
+                </TreeNode>;
     }
     addDoc = ({pid, level}) => {
         this.refs.addDocModal.showModal({
@@ -50,6 +56,11 @@ class Sider extends PureComponent {
     }
     addParams = ({docId, level}) => {
 
+    }
+    onSelect = (id) => {
+        if (id.length > 0 && id[0] !== -1 && id[0] !== '-1'){
+            window.location.hash = id;
+        }
     }
     render() {
         const {docs, apis, params, docId} = this.state;
@@ -65,6 +76,14 @@ class Sider extends PureComponent {
                         addApi={() => this.addApi(rootConfig)}
                         addParams={() => this.addParams(rootConfig)}
                     /></h3>
+                    <div className="list">
+                        <Tree
+                            className="api-tree"
+                            onSelect={this.onSelect}
+                        >
+                        {this.getTree()}
+                        </Tree>
+                    </div>
                 </div>
                 <div className="item">
                     <h3>参数目录</h3>

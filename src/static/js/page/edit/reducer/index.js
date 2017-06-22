@@ -55,7 +55,7 @@ const parameters = (state = {path: [], query: [], body: []}, action) => {
 	}
 	case actionTypes.addQueryParam: {
 		let query = state.query.concat([]);
-		query.push({});
+		query.push({index: action.index});
 
 		return {
 			...state,
@@ -65,6 +65,26 @@ const parameters = (state = {path: [], query: [], body: []}, action) => {
 	default:
 		return state;
 	};
+}
+
+const save = (state = {saveStatus: 0}, action) => {
+	switch(action.type) {
+	case actionTypes.saveFail: {
+		return {
+			err: action.err,
+			saveStatus: -1
+		};
+	}
+	case actionTypes.saveSuc: {
+		return {
+			saveStatus: 1
+		}
+	}
+	default:
+		return {
+			saveStatus: 0
+		};
+	}
 }
 
 export default combineReducers({

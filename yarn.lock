@@ -188,6 +188,13 @@ asap@~2.0.3:
   version "2.0.5"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/asap/-/asap-2.0.5.tgz#522765b50c3510490e52d7dcfe085ef9ba96958f"
 
+asciidoctor.js@^1.5.0:
+  version "1.5.4"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/asciidoctor.js/-/asciidoctor.js-1.5.4.tgz#d8d69f26852e595fcb204bebf6296fe2b807e62f"
+  dependencies:
+    opal-npm-wrapper "^0.9.0-beta2"
+    xmlhttprequest "~1.7.0"
+
 asn1.js@^4.0.0:
   version "4.9.1"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/asn1.js/-/asn1.js-4.9.1.tgz#48ba240b45a9280e94748990ba597d216617fd40"
@@ -231,6 +238,10 @@ async-validator@1.x:
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/async-validator/-/async-validator-1.7.1.tgz#89d3d7a384ca5d05e0f07bf51754d591e2cfec61"
   dependencies:
     babel-runtime "6.x"
+
+async@^0.9.0:
+  version "0.9.2"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/async/-/async-0.9.2.tgz#aea74d5e61c1f899613bf64bda66d4c78f2fd17d"
 
 async@^1.5.2:
   version "1.5.2"
@@ -1383,6 +1394,10 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@2.1.x:
+  version "2.1.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/commander/-/commander-2.1.0.tgz#d121bbae860d9992a3d517ba96f56588e47c6781"
+
 commander@2.9.x, commander@^2.8.1, commander@~2.9.0:
   version "2.9.0"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
@@ -2127,6 +2142,10 @@ find-up@^1.0.0:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
+findit@^2.0.0:
+  version "2.0.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/findit/-/findit-2.0.0.tgz#6509f0126af4c178551cfa99394e032e13a4d56e"
+
 flatten@^1.0.2:
   version "1.0.2"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
@@ -2273,6 +2292,12 @@ globule@^1.0.0:
     glob "~7.1.1"
     lodash "~4.16.4"
     minimatch "~3.0.2"
+
+graceful-fs@^3.0.2:
+  version "3.0.11"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"
+  dependencies:
+    natives "^1.1.0"
 
 graceful-fs@^4.1.2, graceful-fs@^4.1.4:
   version "4.1.11"
@@ -2733,7 +2758,7 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
-js-yaml@^3.4.3:
+js-yaml@^3.2.2, js-yaml@^3.4.3:
   version "3.8.4"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/js-yaml/-/js-yaml-3.8.4.tgz#520b4564f86573ba96662af85a8cafa7b4b5a6f6"
   dependencies:
@@ -2993,6 +3018,12 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
+markdown@^0.5.0:
+  version "0.5.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/markdown/-/markdown-0.5.0.tgz#28205b565a8ae7592de207463d6637dc182722b2"
+  dependencies:
+    nopt "~2.1.1"
+
 material-ui@^0.18.3:
   version "0.18.3"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/material-ui/-/material-ui-0.18.3.tgz#db1cf7190b322b304867e7ffb96b17ef79443bc9"
@@ -3165,6 +3196,10 @@ nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
 
+natives@^1.1.0:
+  version "1.1.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/natives/-/natives-1.1.0.tgz#e9ff841418a6b2ec7a495e939984f78f163e6e31"
+
 ncname@1.0.x:
   version "1.0.0"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/ncname/-/ncname-1.0.0.tgz#5b57ad18b1ca092864ef62b0b1ed8194f383b71c"
@@ -3284,6 +3319,12 @@ nopt@^4.0.1:
     abbrev "1"
     osenv "^0.1.4"
 
+nopt@~2.1.1:
+  version "2.1.2"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/nopt/-/nopt-2.1.2.tgz#6cccd977b80132a07731d6e8ce58c2c8303cf9af"
+  dependencies:
+    abbrev "1"
+
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
   version "2.3.8"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/normalize-package-data/-/normalize-package-data-2.3.8.tgz#d819eda2a9dedbd1ffa563ea4071d936782295bb"
@@ -3383,6 +3424,10 @@ once@^1.3.0, once@^1.3.3:
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
   dependencies:
     wrappy "1"
+
+opal-npm-wrapper@^0.9.0-beta2:
+  version "0.9.2"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/opal-npm-wrapper/-/opal-npm-wrapper-0.9.2.tgz#99d178579b571384c97627d6184708fbb0887498"
 
 opn@4.0.2:
   version "4.0.2"
@@ -5037,6 +5082,10 @@ tar@^2.0.0, tar@^2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
+textile-js@^0.1.8:
+  version "0.1.11"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/textile-js/-/textile-js-0.1.11.tgz#db97d99a8ef916c8f5714a4e82929266e43e0770"
+
 through@~2.3.6:
   version "2.3.8"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
@@ -5129,6 +5178,14 @@ uglify-to-browserify@~1.0.0:
 uid-number@^0.0.6:
   version "0.0.6"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
+
+underscore.string@^2.3.3:
+  version "2.4.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/underscore.string/-/underscore.string-2.4.0.tgz#8cdd8fbac4e2d2ea1e7e2e8097c42f442280f85b"
+
+underscore@^1.7.0:
+  version "1.8.3"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
 uniq@^1.0.1:
   version "1.0.1"
@@ -5394,6 +5451,10 @@ xml-char-classes@^1.0.0:
   version "1.0.0"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/xml-char-classes/-/xml-char-classes-1.0.0.tgz#64657848a20ffc5df583a42ad8a277b4512bbc4d"
 
+xmlhttprequest@~1.7.0:
+  version "1.7.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/xmlhttprequest/-/xmlhttprequest-1.7.0.tgz#dc697a8df0258afacad526c1c296b1bdd12c4ab3"
+
 xtend@^4.0.0:
   version "4.0.1"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
@@ -5405,6 +5466,29 @@ y18n@^3.2.1:
 yallist@^2.0.0:
   version "2.1.2"
   resolved "http://npm-registry.qunhequnhe.com/repository/npm/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
+
+yaml-to-json@^0.3.0:
+  version "0.3.0"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/yaml-to-json/-/yaml-to-json-0.3.0.tgz#65a992312d45e25380ac6670f2312d5ec33f14d2"
+  dependencies:
+    asciidoctor.js "^1.5.0"
+    async "^0.9.0"
+    commander "2.1.x"
+    findit "^2.0.0"
+    graceful-fs "^3.0.2"
+    js-yaml "^3.2.2"
+    markdown "^0.5.0"
+    mkdirp "^0.5.0"
+    textile-js "^0.1.8"
+    underscore "^1.7.0"
+    underscore.string "^2.3.3"
+
+yamljs@^0.2.10:
+  version "0.2.10"
+  resolved "http://npm-registry.qunhequnhe.com/repository/npm/yamljs/-/yamljs-0.2.10.tgz#481cc7c25ca73af59f591f0c96e3ce56c757a40f"
+  dependencies:
+    argparse "^1.0.7"
+    glob "^7.0.5"
 
 yargs-parser@^4.2.0:
   version "4.2.1"

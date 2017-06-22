@@ -57,7 +57,9 @@
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "yaml-to-json": "^0.3.0",
+    "yamljs": "^0.2.10"
   },
   "bugs": {
     "url": "https://github.com/cryzzchen/mock-server/issues"

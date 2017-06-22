@@ -1,16 +1,17 @@
 /*
-* 生成yaml
+* 生成yaml,这个文件用2空格
 */
 
 const _generateSwagger = () => {
     return 'swagger: \'2.0\'\n';
 }
 
-const _generateInfo = (data = {}) => {
+const _generateInfo = (docInfo = {}) => {
+  console.log(docInfo);
     return 'info:\n' +
-            '  description: ' + data.description + '\n' +
+            '  description: ' + docInfo.description + '\n' +
             '  version: 1.0.0\n' +
-            '  title: ' + '测试文档' + '\n';
+            '  title: ' + docInfo.name + '\n';
 
 }
 
@@ -19,17 +20,42 @@ const _generateUrl = (data = {}) => {
             '  - https\n';
 }
 
-const _generatePaths = (data = {}) => {
-    const _generateQuery = (data, prefix) => {
-        return prefix + '- name: size\n' +
-               prefix + '  in: query\n' +
-               prefix + '  description: 这里是测试\n' +
-               prefix + '  type: integer\n';
+const _generatePaths = (apis = []) => {
+    const pathPatterns = [];
+
+    const _generatePathParam = (data, prefix) => {
+        const param = prefix + `- name: ${data.name}\n` +
+               prefix + `  in: path\n` +
+               prefix + `  description: ${data.description}\n` +
+               prefix + `  type: ${data.type}\n` +
+               prefix + `  required: true\n`;
+        
+        return param;
     }
 
-    const _generateParameters = (data, prefix) => {
+    const _generateQueryParam = (data, prefix) => {
+      let param = prefix + `- name: ${data.name}\n` +
+               prefix + `  in: query\n` +
+               prefix + `  description: ${data.description}\n` +
+               prefix + `  type: ${data.type}\n`;
+               
+        if (data.required) {
+          param += prefix + `  required: true\n`;
+        }
+
+        return param;
+    }
+
+    const _generateBodyParam = (data, prefix) => {
+      console.log(data);
+    }
+
+    const _generateParameters = ({path, query, body}, prefix) => {
         return prefix + 'parameters:\n' +
-                _generateQuery(data, prefix);
+                path.map(p => _generatePathParam(p, prefix)).join('') +
+                query.map(p => _generateQueryParam(p, prefix)).join('') +
+                body.map(p => _generateBodyParam(p, prefix)).join('');
+                
     }
 
     const _generateResponse = (data, prefix) => {
@@ -49,23 +75,32 @@ const _generatePaths = (data = {}) => {
     }
 
 
-    const _generatePath = (path, prefix) => {
-        return prefix + '/api/test:\n' +
-               prefix + '  get:\n' +
-               prefix + '    summary: 这个是测试API\n' +
-               prefix + '    description: 这里是详细描述详细描述\n' +
+    const _generatePath = ({basicInfo, path, query, body}, prefix) => {
+        // 不允许有相同的路径 + 相同的method出现
+        const tmp = basicInfo.path + '/' + basicInfo.method;
+        if (pathPatterns.indexOf(tmp) >= 0) {
+          return '';
+        }
+        pathPatterns.push(tmp);
+
+        return prefix + `${basicInfo.path}:\n` +
+               prefix + `  ${basicInfo.method}:\n` +
+               prefix + `    summary: ${basicInfo.name}\n` +
+               prefix + `    description: 子服务：${basicInfo.subService};<br> ${basicInfo.description}\n` +
                _generateResponse(path, prefix + '    ') +
-               _generateParameters(path, prefix + '    ');
+               _generateParameters({path, query, body}, prefix + '    ');
     }
 
     // todo 循环
-    return 'paths:\n' + _generatePath(data.path, '  ');
+    return 'paths:\n' + apis.map(api => _generatePath(api, '  ')).join('');
 }
 
-const generateYaml = () => {
+const generateYaml = (docInfo, apis) => {
     const yaml = _generateSwagger() +
-                    _generateInfo() +
+                    _generateInfo(docInfo) +
                     _generateUrl() +
-                    _generatePaths();
+                    _generatePaths(apis);
     return yaml;
 }
+
+export default generateYaml;

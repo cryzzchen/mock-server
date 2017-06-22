@@ -10,17 +10,27 @@ import AddModal from './addModal';
 import './list.scss';
 
 const DocItem = ({doc}) => {
-    const onClick = () => {
-
+    const onDelete = () => {
+        apis.deleteDoc(doc._id).then(() => {
+            window.location.reload();
+        });
+    }
+    const formatTime = () => {
+        const timestamp = doc.lastModified ? doc.lastModified : doc.createdTime;
+        const date = new Date(timestamp);
+        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+    }
+    const getDocLink = () => {
+        return `/swagger?url=${window.location.host}/json/${doc._id}.json`;
     }
     if (doc.name) {
         return (
             <div className="item">
-                <h3>{doc.name}</h3>
+                <a href={getDocLink()} target="_blank"><h3>{doc.name}</h3></a>
                 <a href={'/doc/edit/' + doc._id} className="icon-edit"><i className="iconfont">&#xe69e;</i></a>
                 <div className="intro">
-                    <span>包含{doc.apis ? doc.apis.length : 0}个api</span>
-                    <span className="time">2014-1-2/12:20</span>
+                    <a href="javascript:;" onClick={onDelete}><i className="iconfont">&#xe69d;</i></a>
+                    <span className="time">{formatTime()}</span>
                 </div>
             </div>
         );
@@ -57,7 +67,7 @@ class List extends PureComponent {
                 />
                 <div className="docs">
                     {docs.map(d =>
-                        <div className="item-wp">
+                        <div className="item-wp" key={d._id}>
                             <DocItem
                                 key={d._id}
                                 doc={d}

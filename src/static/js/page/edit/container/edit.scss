@@ -1,7 +1,16 @@
 .ant-layout-sider-children {
-	color: #fff;
+    color: #fff;
 }
 
 .ant-layout-sider {
-	background: #666;
+    background: #666;
+}
+
+.ant-tree li .ant-tree-node-content-wrapper {
+    color: #fff;
+
+    &.ant-tree-node-selected,
+    &:hover {
+        color: #000;
+    }
 }

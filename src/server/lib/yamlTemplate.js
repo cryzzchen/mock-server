@@ -9,9 +9,9 @@ const _generateSwagger = () => {
 const _generateInfo = (docInfo = {}) => {
   console.log(docInfo);
     return 'info:\n' +
-            '  description: ' + docInfo.description + '\n' +
+            '  description: ' + (docInfo.description + '') + '\n' +
             '  version: 1.0.0\n' +
-            '  title: ' + docInfo.name + '\n';
+            '  title: ' + (docInfo.name + '') + '\n';
 
 }
 
@@ -51,11 +51,13 @@ const _generatePaths = (apis = []) => {
     }
 
     const _generateParameters = ({path, query, body}, prefix) => {
-        return prefix + 'parameters:\n' +
-                path.map(p => _generatePathParam(p, prefix)).join('') +
+        const parameters = path.map(p => _generatePathParam(p, prefix)).join('') +
                 query.map(p => _generateQueryParam(p, prefix)).join('') +
                 body.map(p => _generateBodyParam(p, prefix)).join('');
-                
+        if (parameters.length > 0) {
+          return prefix + 'parameters:\n' + parameters;
+        }
+        return '';
     }
 
     const _generateResponse = (data, prefix) => {

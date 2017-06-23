@@ -41,7 +41,7 @@ class PathParameter extends Component {
                 nextDataSource.push(tmp);
             } else {
                 nextDataSource.push({
-                    name: p.name
+                    ...p
                 });
             }
         });

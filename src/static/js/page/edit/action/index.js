@@ -12,11 +12,14 @@ export const actionTypes = {
     deleteQueryParam: 'deleteQueryParam',
     addQueryParam: 'addQueryParam',
     saveFail: 'saveFail',
-    saveSucc: 'saveSucc'
+    saveSucc: 'saveSucc',
+    updatePageInfo: 'updatePageInfo',
+    updateApiInfo: 'updateApiInfo',
+    updateParametersInfo: 'updateParametersInfo'
 };
 
 // 修改基本信息
-const updateBasicInfo = (basicInfo, ownProps) => {
+const updateBasicInfo = (basicInfo) => {
     return {
         type: actionTypes.updateBasicInfo,
         basicInfo
@@ -29,6 +32,14 @@ const updatePath = (basicInfo) => {
         type: actionTypes.updatePath,
         basicInfo
     }
+}
+
+// 修改其他信息
+const updateParametersInfo = (info) => {
+    return {
+        type: actionTypes.updateParametersInfo,
+        info
+    };
 }
 
 // 修改路径参数
@@ -66,8 +77,11 @@ const addQueryParam = (index) => {
 }
 
 // 修改body
-const updateBodyParams = () => {
-
+const updateBodyParams = (body) => {
+    return {
+        type: actionTypes.updateBodyParams,
+        body
+    }
 }
 
 // 修改响应
@@ -98,8 +112,6 @@ const save = (ownProps) => {
     return (dispath, getState) => {
         const basicInfo = getState().basicInfo;
         const {path, query, body} = getState().parameters;
-        console.log('basicInfo:', basicInfo);
-        console.log('path', path, 'query', query, 'body', body);
         // todo 状态码
         if (format({basicInfo, path, query, body}).v) {
             return apis.createApi({basicInfo, path, query, body}, {docId}).then((data) => {
@@ -111,6 +123,38 @@ const save = (ownProps) => {
     }
 }
 
+const updateApiInfo = (apiId) => {
+    return (dispath, getState) => {
+        if (apiId) {
+            if (apiId === 'addapi') {   // 新建
+                dispath(updateBasicInfo({}));
+                dispath(updateParametersInfo({path: [], query: [], body: []}));
+            } else {
+                apis.getApi(apiId).then((result) => {
+                    dispath(updateBasicInfo({...result[0].basicInfo}));
+                    dispath(updateParametersInfo({
+                        path: result[0].path,
+                        query: result[0].query,
+                        body: result[0].body
+                    }));
+                });
+            }
+        }
+    }
+}
+
+const updatePageInfo = (apiId) => {
+    return (dispath, getState) => {
+        dispath(updateApiInfo(apiId));
+        dispath({
+            type: actionTypes.updatePageInfo,
+            apiId
+        })
+    }
+}
+
+
+
 export default {
     updateBasicInfo,
     updatePath,
@@ -120,5 +164,8 @@ export default {
     addQueryParam,
     updateBodyParams,
     updateResponseParams,
-    save
+    save,
+    updatePageInfo,
+    updateApiInfo,
+    updateParametersInfo
 };

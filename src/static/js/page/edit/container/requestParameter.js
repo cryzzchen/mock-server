@@ -5,6 +5,8 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import actions from '../action/index';
 
+const Option = Select.Option;
+
 const mapStateToProps = (state, ownProps) => {
     const {parameters} = state;
     return {
@@ -66,8 +68,8 @@ class RequestParameter extends PureComponent {
             }
         }, {
             title: '是否必需',
-            dataIndex: 'isRequired',
-            key: 'isRequired',
+            dataIndex: 'required',
+            key: 'required',
             render: (value, row, index) => {
                 return (
                     <Select defaultValue="false" style={{ width: 120 }} onChange={(required) => updateQueryParams({required}, index)}>
@@ -87,8 +89,8 @@ class RequestParameter extends PureComponent {
             }
         }, {
             title: '描述',
-            dataIndex: 'desc',
-            key: 'desc',
+            dataIndex: 'description',
+            key: 'description',
             render: (value, row, index) => {
                 return (
                     <Input type="textarea" onChange={(e) => updateQueryParams({description: e.target.value}, index)} />

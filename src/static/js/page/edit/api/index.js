@@ -13,5 +13,8 @@ export default {
 	},
 	getApisByDocId(id) {
 		return http.get('/api/doc/api/get?docid=' + id);
+	},
+	getApi(id) {
+		return http.get('/api/doc/api/get?_id=' + id);
 	}
 }

@@ -1,11 +1,20 @@
 import {combineReducers} from 'redux';
 import {actionTypes} from '../action/index';
 
+const isEmpty = (obj) => {
+	for (let name in obj) {
+		return false;
+	}
+	return true;
+}
 
 const basicInfo = (state = {}, action) => {
 	switch (action.type) {
 	case actionTypes.updateBasicInfo:
 	case actionTypes.updatePath: {
+		if (isEmpty(action.basicInfo)) {
+			return {};
+		}
 		return Object.assign({}, state, action.basicInfo);
 	}
 	default: 
@@ -13,7 +22,7 @@ const basicInfo = (state = {}, action) => {
 	};
 }
 
-const parameters = (state = {path: [], query: [], body: []}, action) => {
+const parameters = (state = {path: [], query: [], body: ''}, action) => {
 	switch (action.type) {
 	case actionTypes.updatePath: {
 		const apiPath = action.basicInfo.path;
@@ -45,6 +54,11 @@ const parameters = (state = {path: [], query: [], body: []}, action) => {
 			query
 		};
 	}
+	case actionTypes.updateBodyParams: {
+		return {
+			...state
+		}
+	}
 	case actionTypes.deleteQueryParam: {
 		let query = state.query.concat([]);
 		query.splice(action.index, 1);
@@ -61,6 +75,12 @@ const parameters = (state = {path: [], query: [], body: []}, action) => {
 			...state,
 			query
 		};
+	}
+	case actionTypes.updateParametersInfo: {
+		return {
+			...state,
+			...action.info
+		}
 	}
 	default:
 		return state;
@@ -87,7 +107,30 @@ const save = (state = {saveStatus: 0}, action) => {
 	}
 }
 
+const paths = location.pathname.split('/');
+const docId = paths[paths.length - 1];
+let apiId = '';
+const hash = location.hash;
+if (hash && hash.length > 1) {
+	apiId = hash.substring(1, hash.length);
+}
+
+const pageInfo = (state = {docId, apiId}, action) => {
+	switch(action.type) {
+	case actionTypes.updatePageInfo: {
+		return {
+			...state,
+			...action.info
+		}
+	}
+	default: 
+		return state;
+	}
+}
+
 export default combineReducers({
 	basicInfo,
-	parameters
+	parameters,
+	save,
+	pageInfo
 });

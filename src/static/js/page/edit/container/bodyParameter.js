@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {Input} from 'antd';
 import {connect} from 'react-redux';
 import actions from '../action/index';
+import Editor from './react-json-editor';
 
 const mapStateToProps = (state, ownProps) => {
     const {parameters} = state;
@@ -11,14 +12,30 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    updateBasicInfo: (info) => dispatch(actions.updateBasicInfo(info)),
-    updatePath: (path) => dispatch(actions.updatePath(path))
+    updateBodyParams: (body) => actions.updateBodyParams(body);
 });
 
 class BodyParameter extends PureComponent {
+    getTypes() {
+        return [
+            'string',
+            'int',
+            'float',
+            'boolean',
+            'array',
+            'date'
+        ];
+    }
 	render() {
+        const {body} = this.props;
 		return(
-			<Input type="textarea" rows={4} placeholder="{data: []}" />
+            <Editor
+                value={body}
+                placeholder="{data: []}"
+                types={this.getTypes()}
+                customable={true}
+                onFormatChange={(c) => this.props.updateBodyParams({body: c})}
+            />
 		);
 	}
 }

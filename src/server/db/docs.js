@@ -89,6 +89,10 @@ const query = (() => {
                     LOG.error(err);
                     reject(err);
                 }
+
+                // 创建swagger
+                generateSwagger(result.ops[0]._id);
+
                 resolve(result.ops[0]);
             });
         });

@@ -6,6 +6,7 @@ import PathParameter from './pathParameter';
 import RequestParameter from './requestParameter';
 import BodyParameter from './bodyParameter';
 import ResponseBody from './responseBody';
+import CodeResponse from './codeResponse';
 
 import actions from '../action/index';
 
@@ -13,16 +14,19 @@ import './apiEdit.scss';
 const Option = Select.Option;
 
 const mapStateToProps = (state, ownProps) => {
-    const {parameters} = state;
+    const {parameters, pageInfo, basicInfo} = state;
     return {
-        ...parameters
+        ...parameters,
+        ...pageInfo,
+        basicInfo
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateBasicInfo: (info) => dispatch(actions.updateBasicInfo(info)),
     updatePath: (path) => dispatch(actions.updatePath(path)),
-    save: () => dispatch(actions.save(ownProps))
+    save: () => dispatch(actions.save(ownProps)),
+    updateApiInfo: (apiId) => dispatch(actions.updateApiInfo(apiId))
 });
 
 const ItemName = ({name}) => {
@@ -54,11 +58,16 @@ class ApiEdit extends PureComponent {
         };
     }
     componentDidMount() {
-        
+        this.props.updateApiInfo(this.props.apiId);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.apiId !== this.props.apiId) {
+            this.props.updateApiInfo(nextProps.apiId);
+        }
     }
     render() {
         // dispatch
-        const {basicInfo, updateBasicInfo, updatePath, save} = this.props;
+        let {basicInfo, updateBasicInfo, updatePath, save} = this.props;
         // state
         const {path} = this.props;
         const {subService, method, contentType} = this.state;
@@ -78,16 +87,16 @@ class ApiEdit extends PureComponent {
                             <Col span={22} className="main">
                                 <Row type="flex" className="item">
                                     <Col span={2}><ItemName name={"接口名称"} /></Col>
-                                    <Col span={16}><Input onChange={(e) => updateBasicInfo({name: e.target.value})} /></Col>
+                                    <Col span={16}><Input value={basicInfo.name} onChange={(e) => updateBasicInfo({name: e.target.value})} /></Col>
                                 </Row>
                                 <Row type="flex" className="item">
                                     <Col span={2}><ItemName name={"api pattern"} /></Col>
-                                    <Col span={16}><Input onChange={(e) => updatePath({path: e.target.value})} placeholder={"若有路径参数则：{id},例如：/api/get/doc/{id}"} /></Col>
+                                    <Col span={16}><Input value={basicInfo.path} onChange={(e) => updatePath({path: e.target.value})} placeholder={"若有路径参数则：{id},例如：/api/get/doc/{id}"} /></Col>
                                 </Row>
                                 <Row type="flex" className="item">
                                     <Col span={2}><ItemName name={"子服务"} /></Col>
                                     <Col span={16}>
-                                        <Select style={{ width: 240 }} onChange={(e) => updateBasicInfo({subService: e})}>
+                                        <Select value={basicInfo.subService} style={{ width: 240 }} onChange={(e) => updateBasicInfo({subService: e})}>
                                             {subService.map(sub =>
                                                 <Option value={sub} key={sub}>{sub}</Option>
                                             )}
@@ -99,7 +108,7 @@ class ApiEdit extends PureComponent {
                                         <Row>
                                             <Col span={4}><ItemName name={"请求方式"} /></Col>
                                             <Col span={8}>
-                                                <Select style={{ width: 240 }} onChange={(e) => updateBasicInfo({method: e})}>
+                                                <Select value={basicInfo.method} style={{ width: 240 }} onChange={(e) => updateBasicInfo({method: e})}>
                                                     {method.map(sub =>
                                                         <Option value={sub} key={sub}>{sub}</Option>
                                                     )}
@@ -113,7 +122,7 @@ class ApiEdit extends PureComponent {
                                         <Row>
                                             <Col span={4}><ItemName name={"contentType"} /></Col>
                                             <Col span={8}>
-                                                <Select style={{ width: 240 }} onChange={(e) => updateBasicInfo({contentType: e})}>
+                                                <Select value={basicInfo.contentType} style={{ width: 240 }} onChange={(e) => updateBasicInfo({contentType: e})}>
                                                     {contentType.map(sub =>
                                                         <Option value={sub} key={sub}>{sub}</Option>
                                                     )}
@@ -124,7 +133,7 @@ class ApiEdit extends PureComponent {
                                 </Row>
                                 <Row type="flex" className="item">
                                     <Col span={2}><ItemName name={"描述信息"} /></Col>
-                                    <Col span={16}><Input type="textarea" rows={2} onChange={(e) => updateBasicInfo({description: e.target.value})} /></Col>
+                                    <Col span={16}><Input value={basicInfo.description} type="textarea" rows={2} onChange={(e) => updateBasicInfo({description: e.target.value})} /></Col>
                                 </Row>
                             </Col>
                         </Row>
@@ -156,7 +165,7 @@ class ApiEdit extends PureComponent {
                 </div>
                 <div className="response">
                     <div className="hd">
-                        <h3>响应</h3>
+                        <h3>响应(code: 200)</h3>
                     </div>
                     <div className="bd">
                         <ResponseBody />
@@ -167,6 +176,7 @@ class ApiEdit extends PureComponent {
                         <h3>状态码</h3>
                     </div>
                     <div className="bd">
+                        <CodeResponse />
                     </div>
                 </div>
             </div>

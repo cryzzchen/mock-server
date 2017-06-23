@@ -1,5 +1,8 @@
 import React, {PureComponent} from 'react';
 import {Layout} from 'antd';
+import {connect} from 'react-redux';
+
+import actions from '../action/'
 import EditSider from './sider';
 import ApiEdit from './apiEdit';
 
@@ -7,38 +10,35 @@ import './edit.scss';
 
 const {Sider, Content} = Layout;
 
+const mapStateToProps = (state) => {
+	const {docId} = state.pageInfo;
+    return {
+    	docId
+    };
+}
+
+const mapDispathToProps = (dispatch, ownProps) => ({
+	updateApiId: (apiId) => dispatch(actions.updatePageInfo(apiId))
+})
+
+
 class App extends PureComponent {
-	constructor() {
-		super();
-
-		const paths = location.pathname.split('/');
-        const docId = paths[paths.length - 1];
-
-		this.state = {
-			apiId: -1,
-			docId
-		};
-	}
 	componentDidMount() {
+		const {updateApiId} = this.props;
 		window.onhashchange = (e) => {
 			const hash = location.hash;
-			this.setState({
-				apiId: hash.substring(1, hash.length - 1)
-			});
+			updateApiId(hash.substring(1, hash.length));
 		}
 	}
 	render() {
-		const {docId, apiId} = this.state;
+		const {docId} = this.props;
 
 		return (
 			<div>
 				<Layout>
 					<Sider><EditSider docId={docId} /></Sider>
 					<Content>
-						<ApiEdit
-							apiId={apiId}
-							docId={docId}
-						/>
+						<ApiEdit />
 					</Content>
 				</Layout>
 			</div>
@@ -46,4 +46,4 @@ class App extends PureComponent {
 	}
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispathToProps)(App);

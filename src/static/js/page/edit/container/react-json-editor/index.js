@@ -140,10 +140,10 @@ class Editor extends Component {
                 // status: 'format',
                 content: checkResult.json
             });
+            this.props.onFormatChange(checkResult.json);
         }
     }
     render() {
-        console.log(this.state.content)
         return (
             <div className={'json-editor ' + this.props.className}>
                 <div className="main">

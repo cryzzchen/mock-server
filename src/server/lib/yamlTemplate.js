@@ -7,9 +7,8 @@ const _generateSwagger = () => {
 }
 
 const _generateInfo = (docInfo = {}) => {
-  console.log(docInfo);
     return 'info:\n' +
-            '  description: ' + (docInfo.description + '') + '\n' +
+            (docInfo.description ? ('  description: ' + (docInfo.description + '') + '\n'): '') +
             '  version: 1.0.0\n' +
             '  title: ' + (docInfo.name + '') + '\n';
 
@@ -21,7 +20,34 @@ const _generateUrl = (data = {}) => {
 }
 
 const _generatePaths = (apis = []) => {
-    const pathPatterns = [];
+
+    const _generateParamsType = (prefix, data) => {
+      try {
+        const type = typeof data;
+        if (type === 'object') {
+          // 判断是否为数组
+          if (data instanceof Array) {
+          // 数组
+            if (data[0] !== undefined) {
+              const subType = typeof data[0];
+              return prefix + 'type: array\n' +
+                      prefix + 'items:\n' +
+                      prefix + `  type: ${subType}\n`;
+            } else {
+              return prefix + 'type: array\n' +
+                      prefix + 'items:\n' +
+                      prefix + '  type: string\n';
+            }
+          } else {
+            return prefix + 'type: object\n';
+          }
+        } else {
+          return prefix + `type: ${type}\n`;
+        }
+      } catch(e) {
+        return  prefix + `type: string\n`;
+      }
+    }
 
     const _generatePathParam = (data, prefix) => {
         const param = prefix + `- name: ${data.name}\n` +
@@ -47,40 +73,50 @@ const _generatePaths = (apis = []) => {
     }
 
     const _generateBodyParam = (data, prefix) => {
-      console.log(data);
+      let params = '';
+      Object.keys(data).map(key => {
+        const v = data[key];
+        const tmp = prefix + `- name: ${key}\n` +
+                    prefix + `  in: body\n` +
+                    prefix + `  schema:\n` +
+                    _generateParamsType(prefix + '      ', data);
+        params += tmp;
+
+      });
+      return params;
     }
 
-    const _generateParameters = ({path, query, body}, prefix) => {
+    const _generateParameters = ({path, query, body = {}}, prefix) => {
         const parameters = path.map(p => _generatePathParam(p, prefix)).join('') +
                 query.map(p => _generateQueryParam(p, prefix)).join('') +
-                body.map(p => _generateBodyParam(p, prefix)).join('');
+                _generateBodyParam(body, prefix);
         if (parameters.length > 0) {
           return prefix + 'parameters:\n' + parameters;
         }
         return '';
     }
 
-    const _generateResponse = (data, prefix) => {
-        return prefix + 'responses:\n' +
-               prefix + '  200:\n' +
-               prefix + '    description: A list of test\n' +
-               prefix + '    schema:\n' +
-               prefix + '      type: array\n' +
-               prefix + '      items:\n' +
-               prefix + '        required:\n' +
-               prefix + '          - username\n' +
-               prefix + '        properties:\n' +
-               prefix + '          username:\n' +
-               prefix + '            type: string\n' +
-               prefix + '          firstname:\n' +
-               prefix + '            type: string\n';
+    const _generateResponse = (data = {}, prefix) => {
+      // response必需有description
+      let response = prefix + 'responses:\n';
+      Object.keys(data).map(key => {
+        const v = data[key];
+        const tmp = prefix + `  ${key}:\n` +
+                    prefix + `    description: code is ${key}\n`+
+                    prefix + `    schema:\n` +
+                    _generateParamsType(prefix + '      ', data);
+        response += tmp;
+      });
+      return response;
     }
 
-
-    const _generatePath = ({basicInfo, path, query, body}, prefix) => {
+    let pathPatterns = [];
+    const _generatePath = ({basicInfo, path, query, body, response}, prefix) => {
         // 不允许有相同的路径 + 相同的method出现
-        const tmp = basicInfo.path + '/' + basicInfo.method;
+        const tmp = basicInfo.path + '[' + basicInfo.method;
+        console.log(tmp, pathPatterns);
         if (pathPatterns.indexOf(tmp) >= 0) {
+          console.log(2222)
           return '';
         }
         pathPatterns.push(tmp);
@@ -89,7 +125,7 @@ const _generatePaths = (apis = []) => {
                prefix + `  ${basicInfo.method}:\n` +
                prefix + `    summary: ${basicInfo.name}\n` +
                prefix + `    description: 子服务：${basicInfo.subService};<br> ${basicInfo.description}\n` +
-               _generateResponse(path, prefix + '    ') +
+               _generateResponse(response, prefix + '    ') +
                _generateParameters({path, query, body}, prefix + '    ');
     }
 
@@ -102,6 +138,7 @@ const generateYaml = (docInfo, apis) => {
                     _generateInfo(docInfo) +
                     _generateUrl() +
                     _generatePaths(apis);
+                    console.log(yaml)
     return yaml;
 }
 

@@ -38,5 +38,5 @@ apiRouters.forEach((r) => {
 // 启动
 app.listen(3000, () => {
 	LOG.info('Server on port 3000');
-	generateSwagger('59474af4cfad4897009476ab');
+	generateSwagger('5950b2b7530a4323d82f1343');
 });

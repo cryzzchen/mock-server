@@ -133,10 +133,10 @@ const query = (() => {
     };
 
     // 创建API
-    const createApi = (db, {basicInfo, path, query, body}, {docId}) => {
-        console.log(basicInfo, path, query, body, docId);
+    const createApi = (db, {basicInfo, path, query, body, response}, {docid}) => {
+        console.log(basicInfo, path, query, body, docid);
         return new Promise((resolve, reject) => {
-            db.collection(DocCollection).find({_id: ObjectID(docId)}).toArray((err, result) => {
+            db.collection(DocCollection).find({_id: ObjectID(docid)}).toArray((err, result) => {
                 if (err) {
                     LOG.error(err);
                     reject('目录ID不存在');
@@ -147,9 +147,11 @@ const query = (() => {
                     path,
                     query,
                     body,
-                    docid: new DBRef(ObjectID(docId)),
+                    response,
+                    docid: new DBRef(ObjectID(docid)),
                     deleted: 0,
-                    createdTime: new Date().getTime()
+                    createdTime: new Date().getTime(),
+                    overdue: false
                 }, (err1, result1) => {
                     if (err1) {
                         LOG.error(err);
@@ -157,7 +159,7 @@ const query = (() => {
                     }
 
                     // 更新Swagger文档
-                    generateSwagger(docId);
+                    generateSwagger(docid);
 
                     resolve(result1.ops[0]);
                 })
@@ -169,7 +171,6 @@ const query = (() => {
     const getApis = (db, body = {}) => {
         return new Promise((resolve, reject) => {
             if (body._id && typeof body._id === 'string') {
-                console.log('s');
                 body._id = ObjectID(body._id);
             }
             db.collection(ApiCollection).find(body).toArray((err, result) => {
@@ -182,10 +183,16 @@ const query = (() => {
         });
     }
 
-    const getApisByDocId = (db, docId) => {
+    const getApisByDocId = (db, query) => {
+        const docId = query.docid;
+        console.log(query);
         return new Promise((resolve, reject) => {
             db.collection(ApiCollection).find({
-                docid: new DBRef(ObjectID(docId))
+                ...query,
+                docid: new DBRef(ObjectID(docId)),
+                overdue: (query.overdue !== undefined && (query.overdue === 'true' || query.overdue === true) ? true : {
+                    $ne: true
+                })
             }).toArray((err, result) => {
                 if (err) {
                     LOG.error(err);

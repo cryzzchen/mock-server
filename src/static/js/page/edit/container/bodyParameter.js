@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    updateBodyParams: (body) => actions.updateBodyParams(body);
+    updateBodyParams: (body) => dispatch(actions.updateBodyParams(body))
 });
 
 class BodyParameter extends PureComponent {

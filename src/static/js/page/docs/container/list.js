@@ -21,7 +21,7 @@ const DocItem = ({doc}) => {
         return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
     }
     const getDocLink = () => {
-        return `/swagger?url=${window.location.host}/json/${doc._id}.json`;
+        return `/swagger?url=${window.location.protocol}//${window.location.host}/json/${doc._id}.json`;
     }
     if (doc.name) {
         return (

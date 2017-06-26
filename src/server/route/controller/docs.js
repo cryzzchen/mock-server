@@ -111,7 +111,7 @@ router.post('/doc/api/create', (req, res) => {
 // 获取API
 router.get('/doc/api/get', (req, res) => {
     if (req.query.docid) {
-        dbHandler(queryTypes.getApisByDocId, req.query.docid).then(result => {
+        dbHandler(queryTypes.getApisByDocId, req.query).then(result => {
             res.send(result);
         }, err => {
             res.send(err);

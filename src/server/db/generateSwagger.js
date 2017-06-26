@@ -11,10 +11,12 @@ const generateSwagger = (docId) => {
 		dbHandler(queryTypes.getApis, {docid: new DBRef(ObjectID(docId))}),
 		dbHandler(queryTypes.getDocs, {_id: ObjectID(docId)})
 	]).then((result) => {
+		console.log(1)
 		const apis = result[0];
 		const docInfo = result[1][0];
 
 		const yaml = generateYaml(docInfo, apis);
+		console.log(yaml);
 		write(yaml, docId, docId + '.yaml');
 		// 转化成json
 

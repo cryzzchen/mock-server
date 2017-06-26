@@ -1,0 +1,21 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: 试一下
+schemes:
+  - https
+paths:
+  /api/get:
+    put:
+      summary: shi_1
+      description: 子服务：com.qunhe.service.hello;<br> aaaaaaaaaaaa
+      responses:
+        200:
+          description: code is 200
+          schema:
+            type: object
+      parameters:
+      - name: ids
+        in: body
+        schema:
+            type: object

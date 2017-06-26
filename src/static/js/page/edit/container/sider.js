@@ -10,21 +10,58 @@ class Sider extends PureComponent {
         super(props);
 
         this.state = {
-            apis: []
+            apis: [],
+            overApis: []
         };
     }
     componentDidMount() {
-        apis.getApisByDocId(this.props.docId).then(result => {
+        apis.getApisByDocId({docid:this.props.docId}).then(result => {
             this.setState({
                 apis: result
             });
-        })
+        });
+
+        apis.getApisByDocId({
+            docid:this.props.docId,
+            overdue: true
+        }).then(result => {
+            this.setState({
+                overApis: result
+            });
+        });
+    }
+    getApiName(name) {
+        return (
+            <div>
+                <i className="iconfont">&#xe606;</i>
+                {name}
+            </div>
+        );
+    }
+    getNewTitle(title) {
+        return (
+            <div>
+                <i className="iconfont">&#xe6b9;</i>
+                {title}
+            </div>
+        );
     }
     getTree() {
         const {apis} = this.state;
         return <TreeNode key={-1} title="全部接口">
-                    <TreeNode key="addapi" title="新建接口" />
+                    <TreeNode key="addapi" title={this.getNewTitle('新建接口')} />
                 {apis.map(api => {
+                    return <TreeNode key={api._id} title={this.getApiName(api.basicInfo.name)}>
+                                <TreeNode key={12} title={this.getNewTitle('新建数据')} />
+                            </TreeNode>
+                })}
+                </TreeNode>;
+    }
+    getOverDueTree() {
+        // 获得过期API
+        const {overApis} = this.state;
+        return <TreeNode key={-1} title="过期接口">
+                {overApis.map(api => {
                     return <TreeNode key={api._id} title={api.basicInfo.name} />
                 })}
                 </TreeNode>;
@@ -40,16 +77,18 @@ class Sider extends PureComponent {
     render() {
         return (
             <div className="sider">
-                <div className="item">
-                    <div className="list">
-                        <Tree
-                            className="api-tree"
-                            onSelect={this.onSelect}
-                        >
-                        {this.getTree()}
-                        </Tree>
-                    </div>
-                </div>
+                <Tree
+                    className="api-tree"
+                    onSelect={this.onSelect}
+                >
+                    {this.getTree()}
+                </Tree>
+                <Tree
+                    className="api-tree overdue"
+                    onSelect={this.onSelect}
+                >
+                    {this.getOverDueTree()}
+                </Tree>
             </div>
         );
     }

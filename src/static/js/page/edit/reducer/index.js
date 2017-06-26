@@ -22,7 +22,7 @@ const basicInfo = (state = {}, action) => {
 	};
 }
 
-const parameters = (state = {path: [], query: [], body: ''}, action) => {
+const parameters = (state = {path: [], query: [], body: {}}, action) => {
 	switch (action.type) {
 	case actionTypes.updatePath: {
 		const apiPath = action.basicInfo.path;
@@ -56,7 +56,8 @@ const parameters = (state = {path: [], query: [], body: ''}, action) => {
 	}
 	case actionTypes.updateBodyParams: {
 		return {
-			...state
+			...state,
+			...action.body
 		}
 	}
 	case actionTypes.deleteQueryParam: {
@@ -85,6 +86,19 @@ const parameters = (state = {path: [], query: [], body: ''}, action) => {
 	default:
 		return state;
 	};
+}
+
+const response = (state = {'200': {}}, action) => {
+	switch(action.type) {
+	case actionTypes.updateResponse: {
+		return {
+			...state,
+			...action.response
+		}
+	}
+	default:
+		return state;
+	}
 }
 
 const save = (state = {saveStatus: 0}, action) => {
@@ -132,5 +146,6 @@ export default combineReducers({
 	basicInfo,
 	parameters,
 	save,
-	pageInfo
+	pageInfo,
+	response
 });

@@ -1,0 +1,27 @@
+swagger: '2.0'
+info:
+  description: 3333333333333
+  version: 1.0.0
+  title: 333333333
+schemes:
+  - https
+paths:
+  /api/test:
+    get:
+      summary: hhhh
+      description: 子服务：com.qunhe.service.hello;<br> fdsf
+      responses:
+        200:
+          description: code is 200
+          schema:
+            type: object
+  /get/id:
+    get:
+      summary: get试一下
+      description: 子服务：com.qunhe.service.tob;<br> hhhhhhhhhh
+      responses:
+        200:
+          description: code is 200
+          schema:
+            type: object
+            example: {"a": 1}

@@ -8,7 +8,7 @@ export const actionTypes = {
     updatePathParams: 'updatePathParams',
     updateQueryParams: 'updateQueryParams',
     updateBodyParams: 'updateBodyParams',
-    updateResponseParams: 'updateResponseParams',
+    updateResponse: 'updateResponse',
     deleteQueryParam: 'deleteQueryParam',
     addQueryParam: 'addQueryParam',
     saveFail: 'saveFail',
@@ -85,8 +85,11 @@ const updateBodyParams = (body) => {
 }
 
 // 修改响应
-const updateResponseParams = () => {
-
+const updateResponse = (response) => {
+    return {
+        type: actionTypes.updateResponse,
+        response
+    }
 }
 
 const paths = location.pathname.split('/');
@@ -114,7 +117,7 @@ const save = (ownProps) => {
         const {path, query, body} = getState().parameters;
         // todo 状态码
         if (format({basicInfo, path, query, body}).v) {
-            return apis.createApi({basicInfo, path, query, body}, {docId}).then((data) => {
+            return apis.createApi({response: getState().response, basicInfo, path, query, body}, {docid: docId}).then((data) => {
                 dispath(_saveSucc());
             }, (err) => {
                 dispath(_saveFail(err));
@@ -163,9 +166,9 @@ export default {
     deleteQueryParam,
     addQueryParam,
     updateBodyParams,
-    updateResponseParams,
+    updateResponse,
     save,
     updatePageInfo,
     updateApiInfo,
-    updateParametersInfo
+    updateParametersInfo,
 };

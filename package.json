@@ -66,6 +66,7 @@
   },
   "homepage": "https://github.com/cryzzchen/mock-server#readme",
   "dependencies": {
-    "react-json": "^0.2.1"
+    "react-json": "^0.2.1",
+    "swagger-express-middleware": "^1.0.0-alpha.12"
   }
 }

@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1497323252835'); /* IE9*/
-  src: url('iconfont.eot?t=1497323252835#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1497323252835') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1497323252835') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1497323252835#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1498473576927'); /* IE9*/
+  src: url('iconfont.eot?t=1498473576927#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1498473576927') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1498473576927') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1498473576927#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -38,4 +38,8 @@
 .icon-add:before { content: "\e6b9"; }
 
 .icon-icondownload:before { content: "\e714"; }
+
+.icon-shuju-copy:before { content: "\e600"; }
+
+.icon-API:before { content: "\e606"; }
 

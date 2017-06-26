@@ -11,8 +11,8 @@ export default {
 	createApi(data, query) {
 		return http.post('/api/doc/api/create', data, query, 'application/json;charset=UTF-8')
 	},
-	getApisByDocId(id) {
-		return http.get('/api/doc/api/get?docid=' + id);
+	getApisByDocId(query) {
+		return http.get('/api/doc/api/get', query);
 	},
 	getApi(id) {
 		return http.get('/api/doc/api/get?_id=' + id);

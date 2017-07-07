@@ -8,7 +8,12 @@ export const actionTypes = {
     updatePathParams: 'updatePathParams',
     updateQueryParams: 'updateQueryParams',
     updateBodyParams: 'updateBodyParams',
+    updateBodyItem: 'updateBodyItem',
+    deleteBodyRow: 'deleteBodyRow',
+    addBodyRow: 'addBodyRow',
     updateResponse: 'updateResponse',
+    deleteResponseRow: 'deleteResponseRow',
+    addResponseRow: 'addResponseRow',
     deleteQueryParam: 'deleteQueryParam',
     addQueryParam: 'addQueryParam',
     saveFail: 'saveFail',
@@ -84,13 +89,50 @@ const updateBodyParams = (body) => {
     }
 }
 
-// 修改响应
-const updateResponse = (response) => {
+const updateBodyItem = (response, index) => {
     return {
-        type: actionTypes.updateResponse,
-        response
+        type: actionTypes.updateBodyItem,
+        response,
+        index
     }
 }
+
+const deleteBodyRow = (index) => {
+    return {
+        type: actionTypes.deleteBodyRow,
+        index
+    }
+}
+
+const addBodyRow = () => {
+    return {
+        type: actionTypes.addBodyRow
+    }
+}
+
+// 修改响应
+const updateResponse = (response, index) => {
+    return {
+        type: actionTypes.updateResponse,
+        response,
+        index
+    }
+}
+
+
+const deleteResponseRow = (index) => {
+    return {
+        type: actionTypes.deleteResponseRow,
+        index
+    }
+}
+
+const addResponseRow = () => {
+    return {
+        type: actionTypes.addResponseRow
+    }
+}
+
 
 const paths = location.pathname.split('/');
 const docId = paths[paths.length - 1];
@@ -115,9 +157,10 @@ const save = (ownProps) => {
     return (dispath, getState) => {
         const basicInfo = getState().basicInfo;
         const {path, query, body} = getState().parameters;
+        const response = getState().response;
         // todo 状态码
         if (format({basicInfo, path, query, body}).v) {
-            return apis.createApi({response: getState().response, basicInfo, path, query, body}, {docid: docId}).then((data) => {
+            return apis.createApi({response, basicInfo, path, query, body}, {docid: docId}).then((data) => {
                 dispath(_saveSucc());
             }, (err) => {
                 dispath(_saveFail(err));
@@ -131,7 +174,7 @@ const updateApiInfo = (apiId) => {
         if (apiId) {
             if (apiId === 'addapi') {   // 新建
                 dispath(updateBasicInfo({}));
-                dispath(updateParametersInfo({path: [], query: [], body: []}));
+                dispath(updateParametersInfo({path: [], query: [], body: {}}));
             } else {
                 apis.getApi(apiId).then((result) => {
                     dispath(updateBasicInfo({...result[0].basicInfo}));
@@ -166,7 +209,12 @@ export default {
     deleteQueryParam,
     addQueryParam,
     updateBodyParams,
+    updateBodyItem,
+    deleteBodyRow,
+    addBodyRow,
     updateResponse,
+    deleteResponseRow,
+    addResponseRow,
     save,
     updatePageInfo,
     updateApiInfo,

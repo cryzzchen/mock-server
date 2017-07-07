@@ -22,6 +22,7 @@ const basicInfo = (state = {}, action) => {
 	};
 }
 
+// body暂时只考虑array和object的情况
 const parameters = (state = {path: [], query: [], body: {}}, action) => {
 	switch (action.type) {
 	case actionTypes.updatePath: {
@@ -33,7 +34,8 @@ const parameters = (state = {path: [], query: [], body: {}}, action) => {
 			...state,
 			path: paths.map(path => {
 				return {
-					name: path.substring(1, path.length - 1)
+					name: path.substring(1, path.length - 1),
+					required: 'true'
 				};
 			})
 		}
@@ -57,8 +59,33 @@ const parameters = (state = {path: [], query: [], body: {}}, action) => {
 	case actionTypes.updateBodyParams: {
 		return {
 			...state,
-			...action.body
+			body: action.body
 		}
+	}
+	case actionTypes.updateBodyItem: {
+		const now = Object.assign({}, state.body);
+		now.items[action.index] = Object.assign({}, now.items[action.index], action.response);
+		
+		return {
+			...state,
+			body: now
+		};
+	}
+	case actionTypes.deleteBodyRow: {
+		const now = Object.assign({}, state.body);
+		delete now.items[action.index];
+		return {
+			...state,
+			body: now
+		};
+	}
+	case actionTypes.addBodyRow: {
+		const now = Object.assign({}, state.body);
+		now.items.push({});
+		return {
+			...state,
+			body: now
+		};
 	}
 	case actionTypes.deleteQueryParam: {
 		let query = state.query.concat([]);
@@ -88,13 +115,28 @@ const parameters = (state = {path: [], query: [], body: {}}, action) => {
 	};
 }
 
-const response = (state = {'200': {}}, action) => {
+const response = (state = [{name: 200}], action) => {
 	switch(action.type) {
 	case actionTypes.updateResponse: {
-		return {
-			...state,
+		const now = state.concat([]);
+
+		now[action.index] = {
+			...now[action.index],
 			...action.response
 		}
+		return now;
+	}
+	case actionTypes.deleteResponseRow: {
+		const now = state.concat([]);
+
+		delete now[action.index];
+		return now;
+	}
+	case actionTypes.addResponseRow: {
+		const now = state.concat([]);
+
+		now.push({});
+		return now;
 	}
 	default:
 		return state;

@@ -16,9 +16,13 @@ router.get(prefix, (req, res) => {
 });
 
 // 编辑文档
-router.get(prefix + '/edit/:id', (req, res) => {
-	res.render('edit', {id: req.params.id});
+router.get(prefix + '/edit/:docId', (req, res) => {
+	console.log(req.params.docId);
+	res.render('edit', {docId: req.params.docId});
 });
 
+router.get(prefix + '/edit/:docId/api/:apiId', (req, res) => {
+	res.render('edit', {docId: req.params.docId, apiId: req.params.apiId});
+});
 
 export default router;

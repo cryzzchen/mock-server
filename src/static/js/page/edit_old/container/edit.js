@@ -38,7 +38,7 @@ class App extends PureComponent {
 				<Layout>
 					<Sider><EditSider docId={docId} /></Sider>
 					<Content>
-						<ApiEdit />
+						<ApiEdit docId={docId} />
 					</Content>
 				</Layout>
 			</div>

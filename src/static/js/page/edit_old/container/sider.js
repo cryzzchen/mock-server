@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {render} from 'react-dom';
-import {Tree} from 'antd';
+import {Tree, Button} from 'antd';
 import apis from '../api/index';
 
 const TreeNode = Tree.TreeNode;
@@ -77,6 +77,7 @@ class Sider extends PureComponent {
     render() {
         return (
             <div className="sider">
+                <Button>新建参数</Button>
                 <Tree
                     className="api-tree"
                     onSelect={this.onSelect}

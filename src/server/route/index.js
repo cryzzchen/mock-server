@@ -1,5 +1,6 @@
 import ejs from 'ejs';
 import express from 'express';
+import session from 'express-session';
 import bodyParser from 'body-parser';
 import path from 'path';
 
@@ -25,6 +26,16 @@ app.use('/swagger', express.static(rootDir + '/src/static/swagger'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// session
+app.use(session({
+	secret: 'keyboard cat',
+	saveUninitialized: false,
+	resave: false,
+	cookie: {
+		maxAge: 60 * 1000 * 30	// 30天的过期时间
+	}
+}));
+
 // pageController
 pageRouters.forEach((r) => {
 	app.use(r);
@@ -38,5 +49,5 @@ apiRouters.forEach((r) => {
 // 启动
 app.listen(3000, () => {
 	LOG.info('Server on port 3000');
-	generateSwagger('5950b2b7530a4323d82f1343');
+	generateSwagger('59536dba733a9f11402137f7');
 });

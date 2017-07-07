@@ -142,7 +142,11 @@ const query = (() => {
                     reject('目录ID不存在');
                 }
 
+                // 唯一性
+                db.collection(ApiCollection).ensureIndex({apiflag: 1}, {unique: true});
+
                 db.collection(ApiCollection).insert({
+                    apiflag: basicInfo.method + '://' + basicInfo.path,
                     basicInfo,
                     path,
                     query,
@@ -170,6 +174,7 @@ const query = (() => {
     // 获取API
     const getApis = (db, body = {}) => {
         return new Promise((resolve, reject) => {
+
             if (body._id && typeof body._id === 'string') {
                 body._id = ObjectID(body._id);
             }

@@ -3,10 +3,11 @@ import {Button, Input, Row, Col, Table, Select} from 'antd';
 import {connect} from 'react-redux';
 
 import PathParameter from './pathParameter';
-import RequestParameter from './requestParameter';
+import QueryParameter from './queryParameter';
 import BodyParameter from './bodyParameter';
 import ResponseBody from './responseBody';
-import CodeResponse from './codeResponse';
+
+import ParameterModal from '../../../common/parameter';
 
 import actions from '../action/index';
 
@@ -74,6 +75,9 @@ class ApiEdit extends PureComponent {
 
         return (
             <div className="edit-wp">
+            <ParameterModal
+                docId={this.props.docId}
+            />
                 <div className="intro">
                     <div className="hd">
                         <h3>基本信息</h3>
@@ -152,7 +156,7 @@ class ApiEdit extends PureComponent {
                         <h3>请求参数(Query)</h3>
                     </div>
                     <div className="bd">
-                        <RequestParameter />
+                        <QueryParameter />
                     </div>
                 </div>
                 <div className="body">
@@ -165,18 +169,10 @@ class ApiEdit extends PureComponent {
                 </div>
                 <div className="response">
                     <div className="hd">
-                        <h3>响应(code: 200)</h3>
+                        <h3>响应</h3>
                     </div>
                     <div className="bd">
                         <ResponseBody />
-                    </div>
-                </div>
-                <div className="code">
-                    <div className="hd">
-                        <h3>状态码</h3>
-                    </div>
-                    <div className="bd">
-                        <CodeResponse />
                     </div>
                 </div>
             </div>
